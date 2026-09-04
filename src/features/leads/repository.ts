@@ -124,9 +124,18 @@ export async function listLeads(
   if (filters.segment) query = query.eq("segment", filters.segment);
 
   if (filters.sort === "company_desc") {
-    query = query.order("company_name", { ascending: false });
+    query = query
+      .order("unit_count", { ascending: false, nullsFirst: false })
+      .order("google_review_count", { ascending: false, nullsFirst: false });
   } else if (filters.sort === "score_desc") {
     query = query.order("score", { ascending: false, referencedTable: "lead_scores" });
+  } else if (filters.sort === "opportunity_desc") {
+    query = query.order("potential_value", { ascending: false, nullsFirst: false });
+  } else if (filters.sort === "digital_desc") {
+    query = query
+      .order("website_url", { ascending: false, nullsFirst: false })
+      .order("instagram_url", { ascending: false, nullsFirst: false })
+      .order("linkedin_url", { ascending: false, nullsFirst: false });
   } else {
     query = query.order("created_at", { ascending: false });
   }

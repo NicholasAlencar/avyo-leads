@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { requireMember } from "@/features/auth/require-member";
 import { pipelineStages } from "@/features/pipeline/stages";
 import { toSafeMutationMessage, type MutationResult } from "@/lib/security/audit";
@@ -23,6 +23,9 @@ export async function createLeadAction(
     redirect(`/leads/${leadId}`);
   } catch (error) {
     if (error && typeof error === "object" && "digest" in error) throw error;
+    if (error instanceof ZodError) {
+      return { ok: false, message: error.issues[0]?.message ?? "Dados inválidos." };
+    }
     return { ok: false, message: toSafeMutationMessage(error) };
   }
 }
