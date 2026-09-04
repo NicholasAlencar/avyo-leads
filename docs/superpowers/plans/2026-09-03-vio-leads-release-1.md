@@ -224,7 +224,7 @@ git commit -m "feat: add validated provider configuration"
 - Create with CLI, then rename before editing: `supabase/migrations/20260903000100_foundation_schema.sql`
 - Create: `supabase/seed.sql`
 - Create after database startup: `src/lib/supabase/database.types.ts`
-- Test: `supabase/tests/001_schema.test.sql`
+- Test: `supabase/tests/001_schema_test.sql`
 
 **Interfaces:**
 - Produces: database enums `organization_role`, `membership_status`, `pipeline_stage`, `confidence_level`, `activity_type`, `message_channel`, `message_status`, `followup_status`, `integration_state`, `job_status`
@@ -312,8 +312,8 @@ git commit -m "feat: define the VIO Leads database schema"
 
 **Files:**
 - Create with CLI, then rename before editing: `supabase/migrations/20260903000200_authorization_and_audit.sql`
-- Test: `supabase/tests/002_rls.test.sql`
-- Test: `supabase/tests/003_audit.test.sql`
+- Test: `supabase/tests/002_rls_test.sql`
+- Test: `supabase/tests/003_audit_test.sql`
 
 **Interfaces:**
 - Produces: `private.is_organization_member(target_organization_id uuid): boolean`
