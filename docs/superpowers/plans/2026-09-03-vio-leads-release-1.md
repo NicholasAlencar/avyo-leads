@@ -62,6 +62,7 @@ tests/e2e/                           critical browser workflows
 - Create: `package.json`
 - Create: `package-lock.json`
 - Create: `.gitignore`
+- Create: `eslint.config.mjs`
 - Create: `next.config.ts`
 - Create: `tsconfig.json`
 - Create: `postcss.config.mjs`
@@ -138,7 +139,7 @@ Expected: brand test passes and every command exits 0.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add package.json package-lock.json .gitignore next.config.ts tsconfig.json postcss.config.mjs vitest.config.ts src
+git add package.json package-lock.json .gitignore eslint.config.mjs next.config.ts tsconfig.json postcss.config.mjs vitest.config.ts src
 git commit -m "chore: establish VIO Leads application foundation"
 ```
 
