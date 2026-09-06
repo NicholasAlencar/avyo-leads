@@ -20,9 +20,9 @@ export function LeadOverview({ lead, workspace }: { lead: LeadDetail; workspace:
           <Fact label="Valor potencial" value={lead.potentialValue === null ? null : lead.potentialValue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })} />
           <Fact label="Responsável" value={lead.ownerName} />
         </dl>
-        {lead.description ? <p className="mt-5 border-t border-slate-100 pt-5 text-sm leading-6 text-slate-600">{lead.description}</p> : null}
+        {lead.description ? <p className="mt-5 border-t border-[var(--border)] pt-5 text-sm leading-6 text-[var(--text-secondary)]">{lead.description}</p> : null}
         <div className="mt-5 flex flex-wrap gap-2">
-          {[[lead.websiteUrl, "Site"], [lead.instagramUrl, "Instagram"], [lead.linkedinUrl, "LinkedIn"], [lead.googleMapsUrl, "Google Maps"]].map(([url, label]) => url ? <a className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50" href={url} key={label} rel="noreferrer" target="_blank">{label}</a> : null)}
+          {[[lead.websiteUrl, "Site"], [lead.instagramUrl, "Instagram"], [lead.linkedinUrl, "LinkedIn"], [lead.googleMapsUrl, "Google Maps"]].map(([url, label]) => url ? <a className="rounded-xl border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-secondary)] transition hover:bg-[var(--surface-subtle)] hover:text-[var(--text-primary)]" href={url} key={label} rel="noreferrer" target="_blank">{label}</a> : null)}
         </div>
       </section>
 
@@ -35,12 +35,12 @@ export function LeadOverview({ lead, workspace }: { lead: LeadDetail; workspace:
             <Fact label="Possível dor (hipótese)" value={workspace.research.hypotheticalPain} />
             <Fact label="Serviço recomendado" value={workspace.research.recommendedService} />
           </dl>
-        ) : <p className="mt-3 text-sm text-slate-500">Nenhuma análise persistida. O sistema não gera conclusões sem uma fonte de IA configurada e pesquisa real.</p>}
+        ) : <p className="mt-3 text-sm text-[var(--text-secondary)]">Nenhuma análise persistida. O sistema não gera conclusões sem uma fonte de IA configurada e pesquisa real.</p>}
       </section>
 
       <section className="rounded-[var(--radius-panel)] border border-[var(--border)] bg-white p-6 shadow-[var(--shadow-card)]">
         <h2 className="text-sm font-semibold text-[var(--text-primary)]">Fontes e confiança</h2>
-        {workspace.sources.length ? <ul className="mt-4 divide-y divide-slate-100">{workspace.sources.map((source) => <li className="flex items-center justify-between gap-4 py-3" key={source.id}><div><p className="text-sm font-semibold text-slate-800">{source.source}</p><p className="text-xs text-slate-500">{source.fieldName ?? "Informação consolidada"} · confiança {source.confidence.toLowerCase()}</p></div><a className="text-xs font-bold text-blue-600" href={source.sourceUrl} rel="noreferrer" target="_blank">Abrir fonte</a></li>)}</ul> : <p className="mt-3 text-sm text-slate-500">Nenhuma fonte de enriquecimento registrada.</p>}
+        {workspace.sources.length ? <ul className="mt-4 divide-y divide-[var(--border)]">{workspace.sources.map((source) => <li className="flex items-center justify-between gap-4 py-3" key={source.id}><div><p className="text-sm font-semibold text-[var(--text-primary)]">{source.source}</p><p className="text-xs text-[var(--text-secondary)]">{source.fieldName ?? "Informação consolidada"} · confiança {source.confidence.toLowerCase()}</p></div><a className="text-xs font-semibold text-[var(--brand-primary)]" href={source.sourceUrl} rel="noreferrer" target="_blank">Abrir fonte</a></li>)}</ul> : <p className="mt-3 text-sm text-[var(--text-secondary)]">Nenhuma fonte de enriquecimento registrada.</p>}
       </section>
     </div>
   );

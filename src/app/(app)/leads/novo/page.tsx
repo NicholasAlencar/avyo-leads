@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LeadForm } from "@/features/leads/components/lead-form";
+import { PageHeading } from "@/components/ui/primitives";
 
 const allowedDefaults = ["companyName", "segment", "city", "stateCode", "phone", "websiteUrl", "googleMapsUrl", "googlePlaceId"];
 
@@ -8,10 +9,8 @@ export default async function NewLeadPage({ searchParams }: { searchParams: Prom
   const defaults = Object.fromEntries(allowedDefaults.flatMap((key) => typeof params[key] === "string" ? [[key, params[key] as string]] : []));
   return (
     <section className="mx-auto max-w-5xl">
-      <Link className="text-sm font-semibold text-slate-500 hover:text-slate-900" href="/leads">← Voltar para leads</Link>
-      <p className="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Novo registro</p>
-      <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Adicionar lead</h1>
-      <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Registre somente informações empresariais públicas e verificáveis. Campos não conhecidos devem permanecer vazios.</p>
+      <Link className="mb-6 inline-flex text-sm font-semibold text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]" href="/leads">← Voltar para leads</Link>
+      <PageHeading eyebrow="Novo registro" title="Adicionar lead" description="Registre somente informações empresariais públicas e verificáveis. Campos não conhecidos devem permanecer vazios." />
       <div className="mt-7"><LeadForm defaults={defaults} /></div>
     </section>
   );
