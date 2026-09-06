@@ -36,7 +36,7 @@ export function LoginForm({ action, configured }: LoginFormProps) {
         </label>
         <input
           autoComplete="email"
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-950 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+          className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-4 text-slate-950 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100"
           disabled={disabled}
           id="email"
           name="email"
@@ -51,7 +51,7 @@ export function LoginForm({ action, configured }: LoginFormProps) {
         </label>
         <input
           autoComplete="current-password"
-          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-950 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+          className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-4 text-slate-950 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:bg-slate-100"
           disabled={disabled}
           id="password"
           name="password"
@@ -61,7 +61,7 @@ export function LoginForm({ action, configured }: LoginFormProps) {
       </div>
 
       <button
-        className="h-12 w-full rounded-xl bg-slate-950 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+        className="h-12 w-full rounded-2xl bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:from-blue-500 hover:to-cyan-500 disabled:cursor-not-allowed disabled:bg-slate-300"
         disabled={disabled}
         type="submit"
       >
