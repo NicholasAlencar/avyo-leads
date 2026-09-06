@@ -16,7 +16,7 @@ The Vetra reference defines the visual qualities: confident typography, large ra
 
 ## Application Shell
 
-Desktop uses a 248px midnight sidebar with the isolated AVYO wordmark, icon-led navigation, section labels, integration health, and compact user controls. The current numbered boxes are removed. The active destination uses a blue inset surface and a clear left indicator, not glow-heavy decoration.
+Desktop uses a completely new 248px midnight sidebar built as a primary product-navigation surface, not a restyle of the current component. It contains the isolated AVYO wordmark, consistent outline icons, compact navigation labels, meaningful section grouping, a working quick-search entry point, integration health, and a restrained user/profile control anchored at the bottom. The current numbered boxes, promotional intelligence card, decorative counters, runtime-cropped logo, and glow-heavy treatment are removed. The active destination uses a precise blue-tinted inset surface, a slim indicator, and high-contrast text. Hover, focus, collapsed, mobile-drawer, and long-label states are designed explicitly.
 
 The content area uses a warm-gray canvas and a slim sticky command bar. The command bar contains page context, global lead search, a primary “Novo lead” action, notifications when real data exists, and the user menu. On narrow screens the sidebar becomes an accessible drawer and the command bar keeps search and the primary action available.
 
