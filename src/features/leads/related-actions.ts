@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { requireMember } from "@/features/auth/require-member";
+import { getActionMember as requireMember } from "@/lib/security/action-context";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { parseNoteInput, parseRelationId } from "./related-input";
 

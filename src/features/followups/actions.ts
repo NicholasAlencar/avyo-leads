@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z, ZodError } from "zod";
-import { requireMember } from "@/features/auth/require-member";
+import { getActionMember as requireMember } from "@/lib/security/action-context";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { toSafeMutationMessage, type MutationResult } from "@/lib/security/audit";
 import { parseFollowupInput } from "./schema";

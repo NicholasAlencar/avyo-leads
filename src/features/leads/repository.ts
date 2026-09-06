@@ -35,8 +35,9 @@ interface LeadRow {
   discarded_at: string | null;
   last_activity_at: string | null;
   created_at: string;
-  owner: { display_name: string } | null;
-  lead_scores: Array<{ score: number; conclusion: string }> | null;
+  owner_name: string | null;
+  current_score: number | null;
+  score_conclusion: string | null;
 }
 
 const leadSelect = `
@@ -45,12 +46,10 @@ const leadSelect = `
   website_url, instagram_url, linkedin_url, google_maps_url, google_place_id,
   pipeline_stage, owner_id, potential_value, is_favorite, opted_out_at, discarded_at,
   last_activity_at, created_at,
-  owner:profiles!leads_owner_id_fkey(display_name),
-  lead_scores(score, conclusion)
+  owner_name, current_score, score_conclusion
 `;
 
 function toSummary(row: LeadRow): LeadSummary {
-  const currentScore = row.lead_scores?.[0] ?? null;
 
   return {
     id: row.id,
@@ -65,9 +64,9 @@ function toSummary(row: LeadRow): LeadSummary {
     linkedinUrl: row.linkedin_url,
     pipelineStage: row.pipeline_stage,
     ownerId: row.owner_id,
-    ownerName: row.owner?.display_name ?? null,
-    score: currentScore?.score ?? null,
-    opportunityReason: currentScore?.conclusion ?? null,
+    ownerName: row.owner_name,
+    score: row.current_score,
+    opportunityReason: row.score_conclusion,
     lastActivityAt: row.last_activity_at,
     createdAt: row.created_at,
   };
@@ -110,10 +109,9 @@ export async function listLeads(
   const start = (filters.page - 1) * filters.pageSize;
   const end = start + filters.pageSize - 1;
   let query = supabase
-    .from("leads")
+    .from("lead_directory")
     .select(leadSelect, { count: "exact" })
     .eq("organization_id", member.organizationId)
-    .eq("lead_scores.is_current", true)
     .is("discarded_at", null);
 
   if (filters.query) query = query.ilike("company_name", `%${filters.query.replace(/[%_]/g, "\\$&")}%`);
@@ -128,19 +126,16 @@ export async function listLeads(
       .order("unit_count", { ascending: false, nullsFirst: false })
       .order("google_review_count", { ascending: false, nullsFirst: false });
   } else if (filters.sort === "score_desc") {
-    query = query.order("score", { ascending: false, referencedTable: "lead_scores" });
+    query = query.order("current_score", { ascending: false, nullsFirst: false });
   } else if (filters.sort === "opportunity_desc") {
     query = query.order("potential_value", { ascending: false, nullsFirst: false });
   } else if (filters.sort === "digital_desc") {
-    query = query
-      .order("website_url", { ascending: false, nullsFirst: false })
-      .order("instagram_url", { ascending: false, nullsFirst: false })
-      .order("linkedin_url", { ascending: false, nullsFirst: false });
+    query = query.order("digital_presence", { ascending: false });
   } else {
     query = query.order("created_at", { ascending: false });
   }
 
-  const { data, error, count } = await query.range(start, end);
+  const { data, error, count } = await query.order("id").range(start, end);
   if (error) throw error;
 
   return { leads: ((data ?? []) as unknown as LeadRow[]).map(toSummary), total: count ?? 0 };
@@ -149,11 +144,10 @@ export async function listLeads(
 export async function getLead(member: CurrentMember, leadId: string): Promise<LeadDetail | null> {
   const supabase = await createServerSupabaseClient();
   const { data, error } = await supabase
-    .from("leads")
+    .from("lead_directory")
     .select(leadSelect)
     .eq("organization_id", member.organizationId)
     .eq("id", leadId)
-    .eq("lead_scores.is_current", true)
     .maybeSingle();
 
   if (error) throw error;

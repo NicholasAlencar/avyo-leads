@@ -61,12 +61,8 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
     return loginRedirect(request);
   }
 
-  if (isAuthenticated && request.nextUrl.pathname === "/login") {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    url.search = "";
-    return NextResponse.redirect(url);
-  }
+  // Keep login accessible to authenticated users without an active membership.
+  // Otherwise requireMember's denial redirects back here and creates a loop.
 
   return response;
 }

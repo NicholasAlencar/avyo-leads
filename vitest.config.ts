@@ -7,6 +7,7 @@ export default defineConfig({
     },
   },
   test: {
+    exclude: ["**/node_modules/**", "**/.next/**", "tests/e2e/**"],
     environment: "node",
     passWithNoTests: false,
     setupFiles: ["./src/test/setup.ts"],

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z, ZodError } from "zod";
-import { requireMember } from "@/features/auth/require-member";
+import { getActionMember as requireMember } from "@/lib/security/action-context";
 import { pipelineStages } from "@/features/pipeline/stages";
 import { toSafeMutationMessage, type MutationResult } from "@/lib/security/audit";
 import { assignLead, changeLeadStage, createLead, updateLead } from "./repository";

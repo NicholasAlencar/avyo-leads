@@ -44,6 +44,31 @@ async function createFollowup(due = "2026-09-10T10:00:00Z", owner = user, target
 }
 
 describe("PostgreSQL migrations and workflow", () => {
+  it("allows exactly 60 mutations per member per minute", async () => {
+    for (let i = 0; i < 60; i++) {
+      expect((await db.query<{ allowed: boolean }>("select public.consume_mutation_budget($1) as allowed", [org])).rows[0].allowed).toBe(true);
+    }
+    expect((await db.query<{ allowed: boolean }>("select public.consume_mutation_budget($1) as allowed", [org])).rows[0].allowed).toBe(false);
+  });
+  it("does not allow consuming a foreign organization's budget", async () => {
+    await expect(db.query("select public.consume_mutation_budget('20000000-0000-4000-8000-000000000002')")).rejects.toMatchObject({ code: "42501" });
+  });
+  it("computes scoped dashboard totals and zero totals for an empty period", async () => {
+    const result = await db.query<{ result: { counts: { found: number; contacted: number }; approach: unknown[]; segments: unknown[] } }>("select public.commercial_dashboard($1, '1970-01-01', '2099-01-01') as result", [org]);
+    expect(result.rows[0].result.counts.found).toBe(1);
+    expect(result.rows[0].result.counts.contacted).toBe(0);
+    expect(result.rows[0].result.approach).toEqual([]);
+    const empty = await db.query<{ result: { counts: { found: number } } }>("select public.commercial_dashboard($1, '1970-01-01', '1971-01-01') as result", [org]);
+    expect(empty.rows[0].result.counts.found).toBe(0);
+  });
+  it("directory preserves unscored leads and enforces RLS", async () => {
+    expect((await db.query("select id, current_score from public.lead_directory")).rows).toEqual([{ id: lead, current_score: null }]);
+  });
+  it("counts repeated replies once", async () => {
+    await db.query(`insert into public.activities (organization_id, lead_id, actor_id, type, title) values ($1,$2,$3,'RESPONDED','Test response'), ($1,$2,$3,'RESPONDED','Test response')`, [org, lead, user]);
+    const result = await db.query<{ result: { counts: { replies: number } } }>("select public.commercial_dashboard($1, '1970-01-01', '2099-01-01') as result", [org]);
+    expect(result.rows[0].result.counts.replies).toBe(1);
+  });
   it("applies every migration and limits reads to the active organization", async () => {
     const result = await db.query("select id from public.leads");
     expect(result.rows).toEqual([{ id: lead }]);

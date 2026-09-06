@@ -16,6 +16,7 @@ interface DatabaseErrorLike {
 
 export function toSafeMutationMessage(error: unknown): string {
   const code = (error as DatabaseErrorLike | null)?.code;
+  if (code === "RATE_LIMITED") return "Limite de gravações atingido. Aguarde um minuto.";
 
   if (code === "23505") {
     return "Esta empresa já possui um registro com o mesmo identificador público.";
