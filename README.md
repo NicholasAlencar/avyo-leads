@@ -32,6 +32,8 @@ Convide os três usuários no painel Supabase Auth e crie os perfis corresponden
 
 Instale o navegador de testes com `npx playwright install chromium`. `npm run test:e2e` sobe um servidor isolado na porta 3100 e testa login sem credenciais e proteção de rotas. O teste não usa o banco hospedado.
 
+Última verificação: 74 testes unitários/componentes/SQL passaram, assim como lint, TypeScript e build. Os dois cenários de navegador passaram, mas o runner ficou aguardando o encerramento do servidor no Windows e foi interrompido após as asserções. O encerramento automático do processo de E2E ainda precisa ser corrigido antes de CI.
+
 Os testes `src/test/database.test.ts` executam todas as migrations em PostgreSQL via PGlite **somente no runner de testes**, com um schema Auth mínimo. Testam RLS, funções, auditoria, conflitos e métricas. PGlite não é um backend alternativo do aplicativo e não valida GoTrue, JWT, PostgREST, conexões concorrentes ou infraestrutura Supabase. pgTAP e o fluxo autenticado completo no Supabase real continuam obrigatórios antes de produção.
 
 ## Definições das métricas
