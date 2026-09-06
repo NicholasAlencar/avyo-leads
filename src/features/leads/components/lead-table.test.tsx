@@ -56,4 +56,14 @@ describe("LeadTable", () => {
       "/leads/novo",
     );
   });
+
+  it("shows score classification and compact contact availability", () => {
+    render(<LeadTable leads={[{ ...leads[0], score: 82, email: "contato@clinica.com.br", instagramUrl: "https://instagram.com/clinica" }]} />);
+
+    expect(screen.getByText("82")).toBeInTheDocument();
+    expect(screen.getByText("Muito quente")).toBeInTheDocument();
+    expect(screen.getByLabelText("Telefone disponível")).toBeInTheDocument();
+    expect(screen.getByLabelText("E-mail disponível")).toBeInTheDocument();
+    expect(screen.getByLabelText("Instagram disponível")).toBeInTheDocument();
+  });
 });

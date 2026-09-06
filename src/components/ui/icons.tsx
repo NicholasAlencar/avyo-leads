@@ -1,6 +1,7 @@
 export {
   Activity,
   Bell,
+  BriefcaseBusiness,
   Building2,
   CalendarClock,
   Check,
@@ -10,6 +11,8 @@ export {
   ExternalLink,
   Filter,
   Gauge,
+  Globe2,
+  Camera,
   LayoutDashboard,
   ListFilter,
   Mail,
