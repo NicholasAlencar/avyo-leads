@@ -9,7 +9,7 @@ import type { LeadSummary } from "../types";
 import { ContactPresence } from "./contact-presence";
 import { LeadScoreBadge } from "./lead-score-badge";
 
-const stageClasses: Record<string, string> = { NEW: "bg-slate-100 text-slate-700", ANALYSIS: "bg-indigo-50 text-indigo-700", PRIORITY: "bg-red-50 text-red-700", CONTACT_PREPARED: "bg-violet-50 text-violet-700", CONTACTED: "bg-blue-50 text-blue-700", REPLIED: "bg-cyan-50 text-cyan-700", MEETING: "bg-amber-50 text-amber-800", PROPOSAL: "bg-orange-50 text-orange-700", NEGOTIATION: "bg-fuchsia-50 text-fuchsia-700", CLIENT: "bg-emerald-50 text-emerald-700", LOST: "bg-slate-200 text-slate-600" };
+const stageClasses: Record<string, string> = { NEW: "bg-slate-100 text-slate-700", ANALYZING: "bg-indigo-50 text-indigo-700", PRIORITY: "bg-red-50 text-red-700", CONTACT_PREPARED: "bg-violet-50 text-violet-700", CONTACTED: "bg-blue-50 text-blue-700", RESPONDED: "bg-cyan-50 text-cyan-700", MEETING_SCHEDULED: "bg-amber-50 text-amber-800", PROPOSAL: "bg-orange-50 text-orange-700", NEGOTIATION: "bg-fuchsia-50 text-fuchsia-700", CLIENT: "bg-emerald-50 text-emerald-700", LOST: "bg-slate-200 text-slate-600" };
 
 export function LeadTable({ leads }: { leads: LeadSummary[] }) {
   const [selected, setSelected] = useState<Set<string>>(() => new Set());
