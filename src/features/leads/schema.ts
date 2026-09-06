@@ -9,7 +9,7 @@ const optionalText = (max: number) =>
 
 const optionalUrl = z.preprocess(
   (value) => (typeof value === "string" && value.trim() ? value.trim() : undefined),
-  z.url({ error: "URL inválida." }).optional(),
+  z.url({ error: "URL inválida." }).refine((value) => ["http:", "https:"].includes(new URL(value).protocol), "Use uma URL HTTP ou HTTPS.").optional(),
 );
 
 const leadInputSchema = z.object({

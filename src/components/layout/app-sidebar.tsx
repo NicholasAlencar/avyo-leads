@@ -3,6 +3,7 @@ import Link from "next/link";
 const navigation = [
   { href: "/dashboard", label: "Dashboard", marker: "D" },
   { href: "/leads", label: "Leads", marker: "L" },
+  { href: "/encontrar", label: "Encontrar empresas", marker: "E" },
   { href: "/pipeline", label: "Pipeline", marker: "P" },
   { href: "/follow-ups", label: "Follow-ups", marker: "F" },
   { href: "/configuracoes/integracoes", label: "Integrações", marker: "I" },
