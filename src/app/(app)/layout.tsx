@@ -9,11 +9,11 @@ export default async function AuthenticatedLayout({ children }: { children: Reac
   const member = await requireMember();
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <AppSidebar />
-      <div className="lg:pl-[276px]">
+    <div className="min-h-screen bg-[var(--canvas)]">
+      <AppSidebar member={member} />
+      <div className="lg:pl-[248px]">
         <AppHeader member={member} />
-        <main className="mx-auto max-w-[1680px] px-5 py-7 lg:px-9 lg:py-9">{children}</main>
+        <main className="mx-auto max-w-[1720px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
       </div>
     </div>
   );
