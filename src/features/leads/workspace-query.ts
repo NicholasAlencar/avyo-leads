@@ -11,6 +11,8 @@ export interface LeadWorkspaceRelations {
   activities: Array<{ id: string; title: string; description: string | null; occurredAt: string; actorName: string | null }>;
   members: Array<{ userId: string; name: string }>;
   research: { summary: string | null; opportunityReason: string | null; hypotheticalPain: string | null; recommendedService: string | null } | null;
+  scoreFactors: Array<{ id: string; explanation: string; contribution: number }>;
+  messages: Array<{ id: string; channel: string; subject: string | null; body: string; status: string; createdAt: string }>;
 }
 
 function firstRelated<T>(value: T | T[] | null | undefined): T | null {
@@ -20,7 +22,7 @@ function firstRelated<T>(value: T | T[] | null | undefined): T | null {
 export async function getLeadWorkspace(member: CurrentMember, leadId: string): Promise<LeadWorkspaceRelations> {
   const supabase = await createServerSupabaseClient();
   const organization = member.organizationId;
-  const [contacts, sources, notes, tags, lists, activities, memberships, research] = await Promise.all([
+  const [contacts, sources, notes, tags, lists, activities, memberships, research, score, messages] = await Promise.all([
     supabase.from("lead_contacts").select("id, full_name, role_title, email, phone, whatsapp, linkedin_url, confidence").eq("organization_id", organization).eq("lead_id", leadId).order("is_primary", { ascending: false }),
     supabase.from("lead_sources").select("id, source, source_url, field_name, confidence, fetched_at").eq("organization_id", organization).eq("lead_id", leadId).order("fetched_at", { ascending: false }),
     supabase.from("lead_notes").select("id, body, created_at, author:profiles!lead_notes_author_id_fkey(display_name)").eq("organization_id", organization).eq("lead_id", leadId).order("created_at", { ascending: false }),
@@ -29,9 +31,11 @@ export async function getLeadWorkspace(member: CurrentMember, leadId: string): P
     supabase.from("activities").select("id, title, description, occurred_at, actor:profiles!activities_actor_id_fkey(display_name)").eq("organization_id", organization).eq("lead_id", leadId).order("occurred_at", { ascending: false }).limit(100),
     supabase.from("organization_members").select("user_id, profile:profiles!organization_members_user_id_fkey(display_name)").eq("organization_id", organization).eq("status", "active"),
     supabase.from("lead_research").select("summary, opportunity_reason, hypothetical_pain, recommended_service").eq("organization_id", organization).eq("lead_id", leadId).order("version", { ascending: false }).limit(1).maybeSingle(),
+    supabase.from("lead_scores").select("lead_score_factors(id, explanation, contribution)").eq("organization_id", organization).eq("lead_id", leadId).eq("is_current", true).maybeSingle(),
+    supabase.from("outreach_messages").select("id, channel, subject, body, status, created_at").eq("organization_id", organization).eq("lead_id", leadId).order("created_at", { ascending: false }).limit(20),
   ]);
 
-  const failed = [contacts, sources, notes, tags, lists, activities, memberships, research].find((result) => result.error);
+  const failed = [contacts, sources, notes, tags, lists, activities, memberships, research, score, messages].find((result) => result.error);
   if (failed?.error) throw failed.error;
 
   return {
@@ -52,5 +56,7 @@ export async function getLeadWorkspace(member: CurrentMember, leadId: string): P
       return profile ? [{ userId: row.user_id, name: profile.display_name }] : [];
     }),
     research: research.data ? { summary: research.data.summary, opportunityReason: research.data.opportunity_reason, hypotheticalPain: research.data.hypothetical_pain, recommendedService: research.data.recommended_service } : null,
+    scoreFactors: (score.data?.lead_score_factors ?? []) as Array<{ id: string; explanation: string; contribution: number }>,
+    messages: (messages.data ?? []).map((row) => ({ id: row.id, channel: row.channel, subject: row.subject, body: row.body, status: row.status, createdAt: row.created_at })),
   };
 }
