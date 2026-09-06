@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { pipelineLabels, pipelineStages } from "../stages";
 import type { LeadSummary } from "@/features/leads/types";
+import { StageControl } from "./stage-control";
 
 export function PipelineBoard({ leads }: { leads: LeadSummary[] }) {
   return (
@@ -15,11 +16,12 @@ export function PipelineBoard({ leads }: { leads: LeadSummary[] }) {
             </div>
             <div className="mt-2 space-y-2">
               {stageLeads.length ? stageLeads.map((lead) => (
-                <Link className="block rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:border-slate-300" href={`/leads/${lead.id}`} key={lead.id}>
-                  <p className="font-semibold text-slate-900">{lead.companyName}</p>
+                <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm" key={lead.id}>
+                  <Link href={`/leads/${lead.id}`} className="font-semibold text-slate-900 hover:underline">{lead.companyName}</Link>
                   <p className="mt-1 text-xs text-slate-500">{lead.segment ?? "Segmento não informado"}</p>
                   <div className="mt-3 flex items-center justify-between text-xs"><span className="text-slate-400">{lead.city ?? "Sem cidade"}</span><span className="font-bold text-emerald-700">{lead.score === null ? "Sem score" : lead.score}</span></div>
-                </Link>
+                  <StageControl leadId={lead.id} stage={lead.pipelineStage} />
+                </article>
               )) : <p className="rounded-xl border border-dashed border-slate-300 px-3 py-6 text-center text-xs text-slate-400">Nenhum lead</p>}
             </div>
           </section>

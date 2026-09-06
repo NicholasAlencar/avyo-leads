@@ -608,9 +608,9 @@ create unique index contact_suppressions_active_unique
     organization_id,
     lead_id,
     scope,
-    coalesce(channel::text, ''),
-    coalesce(address, '')
-  )
+    channel,
+    address
+  ) nulls not distinct
   where removed_at is null;
 
 create table public.rate_limit_events (

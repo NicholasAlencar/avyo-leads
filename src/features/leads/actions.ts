@@ -66,12 +66,12 @@ export async function changeLeadStageAction(value: {
   to: string;
   confirmed: boolean;
 }): Promise<MutationResult<null>> {
+  const member = await requireMember();
   try {
-    const member = await requireMember();
     const leadId = uuidSchema.parse(value.leadId);
     const from = stageSchema.parse(value.from);
     const to = stageSchema.parse(value.to);
-    await changeLeadStage(member, leadId, from, to, value.confirmed);
+    await changeLeadStage(member, leadId, from, to, z.boolean().parse(value.confirmed));
     revalidatePath(`/leads/${leadId}`);
     revalidatePath("/leads");
     revalidatePath("/pipeline");
