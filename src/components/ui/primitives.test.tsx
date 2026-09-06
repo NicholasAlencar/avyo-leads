@@ -11,8 +11,8 @@ describe("product UI primitives", () => {
 
     const logo = screen.getByRole("img", { name: "AVYO" });
     expect(logo).toHaveAttribute("src", "/brand/avyo-wordmark-light.png");
-    expect(logo).toHaveAttribute("width", "184");
-    expect(logo).toHaveAttribute("height", "54");
+    expect(logo).toHaveAttribute("width", "455");
+    expect(logo).toHaveAttribute("height", "93");
   });
 
   it("renders typed interaction variants with accessible labels", () => {

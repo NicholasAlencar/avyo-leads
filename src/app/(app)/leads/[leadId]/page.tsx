@@ -10,6 +10,9 @@ import { pipelineLabels } from "@/features/pipeline/stages";
 import { StageControl } from "@/features/pipeline/components/stage-control";
 import { FollowupForm } from "@/features/followups/components/followup-form";
 import { IntelligencePanel } from "@/features/intelligence/components";
+import { ChevronRight } from "@/components/ui/icons";
+import { Badge, PageHeading, Surface } from "@/components/ui/primitives";
+import { LeadScoreBadge } from "@/features/leads/components/lead-score-badge";
 
 export default async function LeadDetailPage({ params }: { params: Promise<{ leadId: string }> }) {
   const { leadId } = await params;
@@ -18,13 +21,10 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ lea
   if (!lead) notFound();
 
   return (
-    <section className="mx-auto max-w-[1500px]">
-      <Link className="text-sm font-semibold text-slate-500 hover:text-slate-900" href="/leads">← Voltar para leads</Link>
-      <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-        <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Ficha consolidada</p><h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">{lead.companyName}</h1><p className="mt-2 text-sm text-slate-500">{pipelineLabels[lead.pipelineStage]}</p></div>
-        <div className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-right"><p className="text-xs font-semibold text-slate-400">VIO Lead Score</p><p className="mt-1 text-2xl font-black text-slate-950">{lead.score === null ? "—" : `${lead.score}/100`}</p></div>
-      </div>
-      <div className="mt-7 grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]"><div className="space-y-5"><LeadOverview lead={lead} workspace={workspace} /><IntelligencePanel leadId={lead.id} factors={workspace.scoreFactors} messages={workspace.messages} research={workspace.research} /><LeadTimeline activities={workspace.activities} /></div><div className="space-y-5"><section className="rounded-2xl border border-slate-200 bg-white p-5"><h2 className="text-sm font-bold">Etapa comercial</h2><StageControl leadId={lead.id} stage={lead.pipelineStage} /></section><FollowupForm leadId={lead.id} members={workspace.members} defaultOwner={lead.ownerId ?? member.userId} /><LeadRelations lead={lead} workspace={workspace} /></div></div>
+    <section className="mx-auto max-w-[1480px]">
+      <Link className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-secondary)] hover:text-blue-700" href="/leads">Leads <ChevronRight className="size-3.5" /> Ficha da empresa</Link>
+      <div className="mt-4 rounded-[var(--radius-panel)] border border-[var(--border)] bg-white p-5 shadow-[var(--shadow-card)]"><PageHeading eyebrow="Inteligência do lead" title={lead.companyName} description={`${lead.segment ?? "Segmento não informado"} · ${[lead.city, lead.stateCode].filter(Boolean).join("/") || "Local não informado"}`} actions={<div className="flex items-center gap-3"><Badge tone="info">{pipelineLabels[lead.pipelineStage]}</Badge><LeadScoreBadge score={lead.score} /></div>} /></div>
+      <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]"><div className="space-y-5"><LeadOverview lead={lead} workspace={workspace} /><IntelligencePanel leadId={lead.id} factors={workspace.scoreFactors} messages={workspace.messages} research={workspace.research} /><LeadTimeline activities={workspace.activities} /></div><div className="space-y-5 xl:sticky xl:top-[88px] xl:self-start"><Surface className="p-5"><h2 className="text-sm font-semibold">Etapa comercial</h2><p className="mt-1 text-xs text-[var(--text-secondary)]">Avance somente quando a próxima ação estiver validada.</p><StageControl leadId={lead.id} stage={lead.pipelineStage} /></Surface><FollowupForm leadId={lead.id} members={workspace.members} defaultOwner={lead.ownerId ?? member.userId} /><LeadRelations lead={lead} workspace={workspace} /></div></div>
     </section>
   );
 }

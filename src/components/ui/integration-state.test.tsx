@@ -21,6 +21,7 @@ describe("IntegrationState", () => {
     expect(screen.getByText("INTEGRAÇÃO NÃO CONFIGURADA")).toBeInTheDocument();
     expect(screen.getByText("GOOGLE_MAPS_API_KEY")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Indisponível" })).toBeDisabled();
+    expect(screen.getByRole("article", { name: "Google Places / Maps" })).toHaveAttribute("data-state", "unconfigured");
   });
 
   it("hides secret variable names from non-administrators", () => {
@@ -54,5 +55,6 @@ describe("IntegrationState", () => {
 
     expect(screen.getByText("CONFIGURADA")).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(screen.getByRole("article", { name: "Supabase" })).toHaveAttribute("data-state", "configured");
   });
 });
