@@ -10,7 +10,7 @@ export default async function IntegrationsPage() {
     <section className="mx-auto max-w-6xl">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
             Configurações
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Integrações</h1>

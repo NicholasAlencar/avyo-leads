@@ -9,7 +9,7 @@ export default async function FollowupsPage({ searchParams }: { searchParams: Pr
   const page = Math.max(1, Math.min(100000, Math.floor(Number(params.page) || 1)));
   const { rows, total } = await getFollowups(await requireMember(), status, page);
   return <section className="mx-auto max-w-6xl">
-    <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">Próximas conversas</p><h1 className="mt-2 text-3xl font-bold">Follow-ups</h1>
+    <p className="text-xs font-bold uppercase tracking-widest text-blue-600">Próximas conversas</p><h1 className="mt-2 text-3xl font-bold">Follow-ups</h1>
     <p className="mt-2 text-sm text-slate-600">Acompanhe prazos e registre as tarefas concluídas. Nenhuma mensagem é enviada ao concluir uma tarefa.</p>
     <nav aria-label="Status de follow-ups" className="my-6 flex gap-2">{([['PENDING', 'Pendentes'], ['COMPLETED', 'Concluídos'], ['CANCELLED', 'Cancelados']] as const).map(([value, label]) => <Link key={value} aria-current={status === value ? "page" : undefined} href={`?status=${value}`} className={`rounded-lg px-4 py-2 text-sm font-semibold ${status === value ? 'bg-slate-950 text-white' : 'bg-white text-slate-600'}`}>{label}</Link>)}</nav>
     <FollowupList rows={rows} />

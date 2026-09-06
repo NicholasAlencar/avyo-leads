@@ -26,7 +26,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
     <section className="mx-auto max-w-[1600px]">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">CRM interno</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">CRM interno</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Leads</h1>
           <p className="mt-2 text-sm text-slate-600">{total} empresa{total === 1 ? "" : "s"} na sua organização</p>
         </div>

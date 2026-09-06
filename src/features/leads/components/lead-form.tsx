@@ -50,7 +50,7 @@ export function LeadForm({ defaults = {} }: { defaults?: LeadDefaults }) {
       {state && !state.ok ? <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700" role="alert">{state.message}</p> : null}
 
       <div className="flex justify-end">
-        <button className="rounded-xl bg-[#18250f] px-5 py-3 text-sm font-bold text-white hover:bg-[#263919] disabled:cursor-wait disabled:opacity-60" disabled={pending} type="submit">
+        <button className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500 disabled:cursor-wait disabled:opacity-60" disabled={pending} type="submit">
           {pending ? "Salvando..." : "Salvar lead"}
         </button>
       </div>

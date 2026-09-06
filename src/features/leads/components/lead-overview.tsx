@@ -40,7 +40,7 @@ export function LeadOverview({ lead, workspace }: { lead: LeadDetail; workspace:
 
       <section className="rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-base font-bold text-slate-950">Fontes e confiança</h2>
-        {workspace.sources.length ? <ul className="mt-4 divide-y divide-slate-100">{workspace.sources.map((source) => <li className="flex items-center justify-between gap-4 py-3" key={source.id}><div><p className="text-sm font-semibold text-slate-800">{source.source}</p><p className="text-xs text-slate-500">{source.fieldName ?? "Informação consolidada"} · confiança {source.confidence.toLowerCase()}</p></div><a className="text-xs font-bold text-emerald-700" href={source.sourceUrl} rel="noreferrer" target="_blank">Abrir fonte</a></li>)}</ul> : <p className="mt-3 text-sm text-slate-500">Nenhuma fonte de enriquecimento registrada.</p>}
+        {workspace.sources.length ? <ul className="mt-4 divide-y divide-slate-100">{workspace.sources.map((source) => <li className="flex items-center justify-between gap-4 py-3" key={source.id}><div><p className="text-sm font-semibold text-slate-800">{source.source}</p><p className="text-xs text-slate-500">{source.fieldName ?? "Informação consolidada"} · confiança {source.confidence.toLowerCase()}</p></div><a className="text-xs font-bold text-blue-600" href={source.sourceUrl} rel="noreferrer" target="_blank">Abrir fonte</a></li>)}</ul> : <p className="mt-3 text-sm text-slate-500">Nenhuma fonte de enriquecimento registrada.</p>}
       </section>
     </div>
   );

@@ -20,7 +20,7 @@ export function IntegrationState({ status, isAdmin }: IntegrationStateProps) {
         <span
           className={
             status.configured
-              ? "rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-bold tracking-wide text-emerald-700"
+              ? "rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-bold tracking-wide text-blue-600"
               : "rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-bold tracking-wide text-amber-800"
           }
         >

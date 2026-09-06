@@ -54,13 +54,13 @@ export function LeadTable({ leads }: LeadTableProps) {
 
   if (leads.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+      <div className="rounded-3xl border border-dashed border-slate-300 bg-white px-6 py-16 shadow-sm text-center">
         <h2 className="text-lg font-semibold text-slate-900">Nenhum lead encontrado</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
           Ajuste os filtros ou registre uma empresa com informações públicas verificadas.
         </p>
         <Link
-          className="mt-5 inline-flex rounded-xl bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white"
+          className="mt-5 inline-flex rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white"
           href="/leads/novo"
         >
           Adicionar primeiro lead
@@ -70,13 +70,13 @@ export function LeadTable({ leads }: LeadTableProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[var(--avyo-shadow)]">
       <div className="flex min-h-11 items-center border-b border-slate-100 px-4 text-xs font-semibold text-slate-500">
         {selectedCount > 0 ? `${selectedCount} selecionado${selectedCount > 1 ? "s" : ""}` : `${leads.length} nesta página`}
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[1280px] border-collapse text-left text-sm">
-          <thead className="bg-slate-50 text-[11px] uppercase tracking-[0.08em] text-slate-500">
+          <thead className="sticky top-0 bg-slate-50/95 text-[11px] uppercase tracking-[0.08em] text-slate-500">
             <tr>
               <th className="w-12 px-4 py-3">
                 <input
@@ -103,7 +103,7 @@ export function LeadTable({ leads }: LeadTableProps) {
           </thead>
           <tbody className="divide-y divide-slate-100">
             {leads.map((lead) => (
-              <tr className="align-top hover:bg-slate-50/70" key={lead.id}>
+              <tr className="align-top transition hover:bg-blue-50/40" key={lead.id}>
                 <td className="px-4 py-4">
                   <input
                     aria-label={`Selecionar ${lead.companyName}`}
@@ -117,7 +117,7 @@ export function LeadTable({ leads }: LeadTableProps) {
                   {lead.score === null ? (
                     <span className="whitespace-nowrap text-xs text-slate-400">Sem score</span>
                   ) : (
-                    <span className="rounded-lg bg-emerald-50 px-2 py-1 font-bold text-emerald-700">{lead.score}</span>
+                    <span className="rounded-lg bg-blue-50 px-2 py-1 font-bold text-blue-600">{lead.score}</span>
                   )}
                 </td>
                 <td className="px-3 py-4">
